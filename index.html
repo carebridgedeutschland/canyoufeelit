@@ -16,7 +16,6 @@
       align-items: center;
       height: 100vh;
       transition: background-color 0.5s ease;
-}
     }
 
     .container {
@@ -31,6 +30,7 @@
 
     .loader2 {
       width: 20px;
+      display: block;
     } 
    
  /* Bild nach 5 Klicks fullscreen, zentriert, leicht gestreckt */
@@ -103,7 +103,8 @@ let clicks = 0;
 const plakativ = document.getElementById("plakativ");
 const sound = document.getElementById("sound");
 const sound2 = document.getElementById("sound2");
-
+const canvas = document.getElementById("cursorTrail"); 🔴 // Canvas vor Nutzung deklarieren
+const ctx = canvas.getContext("2d");
  document.body.addEventListener("click", () => {
       clicks++;
 
@@ -121,10 +122,8 @@ const sound2 = document.getElementById("sound2");
         document.body.style.cursor = 'none'; // 🟨 echten Cursor ausblenden
       // Ghost-Cursor aktivieren
         canvas.style.display = "block";
-        document.body.addEventListener("mousemove", addCursorTrail);
-        
-  }, 3000);
-      }
+        document.body.addEventListener("mousemove", addCursorTrail); 🔴 // Listener korrekt hinzufügen
+    }
     });
    // ================= Ghost-Cursor-Trail mit Cursor-PNG =================
     const canvas = document.getElementById("cursorTrail");
