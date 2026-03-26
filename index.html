@@ -47,6 +47,18 @@
       object-fit: cover;      /* Desktop/Mobile füllen */
       object-position: center;
     }
+    /* Verhindert Text-/Bild-Auswahl */
+body, img, picture, canvas {
+  user-select: none;       /* keine Markierung möglich */
+  -webkit-user-select: none; /* Safari/Chrome */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE/Edge */
+}
+
+/* Canvas und Overlay-Bilder ignorieren Mausinteraktionen */
+#plakativ, #cursorTrail {
+  pointer-events: none;    /* keine Klicks/Maus auf dem Bild möglich */
+}
   </style>
 </head>
   <body>
