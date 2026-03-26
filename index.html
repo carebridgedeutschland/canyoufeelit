@@ -27,6 +27,7 @@
     .loader2 {
       width: 20px;
     } 
+    <img id="plakativ" src="2241387.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10;">
     @media only screen and (max-width: 250px) {
     .main {
       width: 400px; /* Logo kleiner auf Handy */
@@ -52,5 +53,18 @@
       document.getElementById("sound").play();
     }, { once: true });
   </script>
+
+<script>
+  let clicks = 0;
+  const plakativ = document.getElementById("plakativ");
+
+  document.body.addEventListener("click", () => {
+    clicks++;
+    if (clicks >= 5) {  // nach 3 Klicks erscheint das Bild
+      plakativ.style.display = "block";
+    }
+  });
+</script>  
+  
 </body>
 </html>
