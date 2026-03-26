@@ -68,7 +68,7 @@ body, img, picture, canvas {
     /* 🟨 Link Style */
   #specialLink {
     position: absolute;
-    bottom: 20px;
+    bottom: 70px;
     left: 50%;
     transform: translateX(-50%);
     background-color: black;
@@ -180,7 +180,14 @@ const sound2 = document.getElementById("sound2");
     }
     animateTrail();
 
- 
+       // 🟨 Link nach 3 Sekunden einblenden
+      const specialLink = document.getElementById("specialLink");
+      setTimeout(() => {
+        specialLink.style.display = "block";
+      }, 3000);
+    }
+  }, { once: false });
+
 
 </script>
 </body>
