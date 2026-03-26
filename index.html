@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Lädt...</title>
   <style>
+    /* ==========================================
+       Grund-Styles
+       ========================================== */
     body {
       margin: 0;
       background: white;
@@ -12,6 +15,9 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      transition: background-color 0.5s ease;
+      overflow: hidden; /* verhindert Scrollbars */
+      cursor: url('cursor.png') 16 16, auto; /* 🟨 echter Cursor ersetzt vor 5 Klicks */
     }
 
     .container {
@@ -108,6 +114,7 @@ const sound2 = document.getElementById("sound2");
         sound.pause();                     
         sound2.play(); 
         document.body.style.backgroundColor = "#000000"; // hellgrau
+        document.body.style.cursor = 'none'; // 🟨 echten Cursor ausblenden
       // Ghost-Cursor aktivieren
         canvas.style.display = "block";
         document.body.addEventListener("mousemove", addCursorTrail);
