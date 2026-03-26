@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Lädt...</title>
   <style>
-    /* ==========================================
-       Grund-Styles
-       ========================================== */
     body {
       margin: 0;
       background: white;
@@ -123,13 +120,12 @@ const ctx = canvas.getContext("2d");
       // Ghost-Cursor aktivieren
         canvas.style.display = "block";
         document.body.addEventListener("mousemove", addCursorTrail); 🔴 // Listener korrekt hinzufügen
-    }
     });
-   // ================= Ghost-Cursor-Trail mit Cursor-PNG =================
+ 
+    // ================= Ghost-Cursor-Trail mit Cursor-PNG =================
     const canvas = document.getElementById("cursorTrail");
     const ctx = canvas.getContext("2d");
     let cursors = [];
-
     // Cursor-Bild
     const cursorImg = new Image();
     cursorImg.src = "cursor.png"; // 🟢 Dein Maus-Cursor PNG hier
