@@ -28,19 +28,25 @@
       width: 20px;
     } 
    
-    @media only screen and (max-width: 250px) {
-    .main {
-      width: 400px; /* Logo kleiner auf Handy */
-    }
-    .loader {
-      width: 60px; /* Loader kleiner auf Handy */
-    }
-       #plakativ img {
+ /* Bild nach 5 Klicks fullscreen, zentriert, leicht gestreckt */
+    #plakativ {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;      /* füllt Screen, behält Seitenverhältnis */
-      object-position: center; /* zentriert Augen */
-  }
+      display: none;
+      z-index: 10;
+      object-fit: fill;      /* füllt Bildschirm, Augen mittig */
+      object-position: center;
+    }
+
+    #plakativ img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;      /* Desktop/Mobile füllen */
+      object-position: center;
+    }
   </style>
 </head>
   <body>
@@ -49,7 +55,7 @@
     <img src="loader2.gif" class="loader2">
   </div>
     
-<picture id="plakativ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10;">
+<picture id="plakativ">
     <source srcset="eyessmall.png" media="(max-width: 600px)">
     <img src="eyesbig.png">
   </picture>
