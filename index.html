@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Lädt...</title>
   <style>
     body {
@@ -18,14 +19,22 @@
     }
 
     .main {
-      width: 400px;
+      width: 250px;
       display: block;
       margin-bottom: 15px;
     }
 
     .loader2 {
-      width: 60px;
+      width: 20px;
+    } 
+    @media only screen and (max-width: 600px) {
+    .main {
+      width: 400px; /* Logo kleiner auf Handy */
     }
+    .loader {
+      width: 60px; /* Loader kleiner auf Handy */
+    }
+  }
   </style>
 </head>
 <body>
