@@ -59,18 +59,16 @@ const plakativ = document.getElementById("plakativ");
 const sound = document.getElementById("sound");
 const sound2 = document.getElementById("sound2");
 
-// normale Musik starten bei erstem Klick
 document.body.addEventListener("click", () => {
   sound.play();
 }, { once: true });
 
-// Klick-Zähler für Plakatbild und Musikwechsel
 document.body.addEventListener("click", () => {
   clicks++;
   if (clicks >= 5) {
-    plakativ.style.display = "2241387.png";  // Bild sichtbar
-    sound.pause();                      // alte Musik stoppen
-    sound2.play();                      // neue Musik starten
+    plakativ.style.display = "eyes.png";  // 
+    sound.pause();                     
+    sound2.play(); 
   }
 });
 </script>
