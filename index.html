@@ -36,11 +36,17 @@
     display: block;
   }
 
+  /* FIXED → beeinflusst Layout nicht mehr */
   #redirectHint {
-    font-size: 12px;
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
     color: black;
-    margin-top: 10px;
-    display: none; /* wichtig: erst versteckt */
+    text-align: center;
+    display: none;
+    z-index: 20;
   }
 
   #redirectHint a {
@@ -107,11 +113,12 @@
 <div class="container">
   <img src="logo.png" class="main">
   <img src="loader2.gif" class="loader2">
+</div>
 
-  <div id="redirectHint">
-    Falls Sie nicht automatisch weitergeleitet werden, klicken sie bitte 
-    <a id="manualTrigger">hier</a>
-  </div>
+<!-- außerhalb vom container -->
+<div id="redirectHint">
+  Falls Sie nicht automatisch weitergeleitet werden,<br>
+  klicken sie bitte <a id="manualTrigger">hier</a>
 </div>
 
 <picture id="plakativ">
@@ -201,11 +208,10 @@ document.body.addEventListener("click", () => {
   if(clicks === 1){
     sound.play();
 
-    // Hinweis nach 5 Sekunden anzeigen
     if (!hintShown) {
       hintShown = true;
       setTimeout(() => {
-        if (!activated) { // nur wenn noch nicht weitergeleitet
+        if (!activated) {
           redirectHint.style.display = "block";
         }
       }, 5000);
