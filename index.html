@@ -2,161 +2,150 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Lädt...</title>
-  <style>
-    body {
-      margin: 0;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      transition: background-color 0.5s ease;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Lädt...</title>
+<style>
+  /* Grund-Styles */
+  body {
+    margin: 0;
+    background: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
+  }
 
-    .container {
-      text-align: center;
-    }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .main {
-      width: 250px;
-      display: block;
-      margin-bottom: 15px;
-    }
+  .main {
+    width: 250px;
+    display: block;
+    margin-bottom: 15px;
+  }
 
-    .loader2 {
-      width: 20px;
-      display: block;
-    } 
-   
- /* Bild nach 5 Klicks fullscreen, zentriert, leicht gestreckt */
-    #plakativ {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      z-index: 10;
-      object-fit: cover;      /* füllt Bildschirm, Augen mittig */
-      object-position: center;
-    }
+  .loader2 {
+    width: 20px;
+    display: block;
+  }
 
-    #plakativ img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;      /* Desktop/Mobile füllen */
-      object-position: center;
-    }
-    /* Verhindert Text-/Bild-Auswahl */
-body, img, picture, canvas {
-  user-select: none;       /* keine Markierung möglich */
-  -webkit-user-select: none; /* Safari/Chrome */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE/Edge */
-}
+  /* Fullscreen Bild nach 5 Klicks */
+  #plakativ {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 10;
+    object-fit: cover;
+    object-position: center;
+  }
 
-/* Canvas und Overlay-Bilder ignorieren Mausinteraktionen */
-#plakativ, #cursorTrail {
-  pointer-events: none;    /* keine Klicks/Maus auf dem Bild möglich */
-}
-  </style>
+  #plakativ img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
+  /* Verhindert Text-/Bild-Auswahl */
+  body, img, picture, canvas {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Canvas ignoriert Mausinteraktionen */
+  #plakativ, #cursorTrail {
+    pointer-events: none;
+  }
+</style>
 </head>
-  <body>
+<body>
   <div class="container">
     <img src="logo.png" class="main">
     <img src="loader2.gif" class="loader2">
   </div>
-    
-<picture id="plakativ">
+
+  <picture id="plakativ">
     <source srcset="eyessmall.png" media="(max-width: 600px)">
     <img src="eyesbig.png">
   </picture>
 
-     <!-- ✅ Hier einfügen -->
-  <canvas id="cursorTrail" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;display:none;"></canvas>
- 
- 
+  <canvas id="cursorTrail" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;display:none;"></canvas>
+
   <audio id="sound" loop>
-  <source src="sound.mp3" type="audio/mpeg">
-</audio>
-<audio id="sound2" loop>
-  <source src="sound2.mp3" type="audio/mpeg">
-</audio>
+    <source src="sound.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sound2" loop>
+    <source src="sound2.mp3" type="audio/mpeg">
+  </audio>
 
-  <script>
-    document.body.addEventListener("click", () => {
-      document.getElementById("sound").play();
-    }, { once: true });
-  </script>
-    
-  <script>
+<script>
+  let clicks = 0;
+  const plakativ = document.getElementById("plakativ");
+  const sound = document.getElementById("sound");
+  const sound2 = document.getElementById("sound2");
+  const canvas = document.getElementById("cursorTrail");
+  const ctx = canvas.getContext("2d");
 
-    document.body.style.cursor = "url('cursor.png') 16 16, auto";
-    
-let clicks = 0;
-const plakativ = document.getElementById("plakativ");
-const sound = document.getElementById("sound");
-const sound2 = document.getElementById("sound2");
-const canvas = document.getElementById("cursorTrail"); 🔴 // Canvas vor Nutzung deklarieren
-const ctx = canvas.getContext("2d");
- document.body.addEventListener("click", () => {
-      clicks++;
+  const cursorImg = new Image();
+  cursorImg.src = "cursor.png";
+  let cursors = [];
 
-      // erster Sound nur beim ersten Klick
-      if (clicks === 1) {
-        sound.play(); // ✅ korrigiert: alles in einem Listener
-      }
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
-      // nach 5 Klicks
-      if (clicks >= 5) {
-        plakativ.style.display = "block"; // ✅ korrigiert: display richtig setzen
-        sound.pause();                     
-        sound2.play(); 
-        document.body.style.backgroundColor = "#000000"; // hellgrau
-        document.body.style.cursor = 'none'; // 🟨 echten Cursor ausblenden
-      // Ghost-Cursor aktivieren
-        canvas.style.display = "block";
-        document.body.addEventListener("mousemove", addCursorTrail); 🔴 // Listener korrekt hinzufügen
-    });
- 
-    // ================= Ghost-Cursor-Trail mit Cursor-PNG =================
-    const canvas = document.getElementById("cursorTrail");
-    const ctx = canvas.getContext("2d");
-    let cursors = [];
-    // Cursor-Bild
-    const cursorImg = new Image();
-    cursorImg.src = "cursor.png"; // 🟢 Dein Maus-Cursor PNG hier
+  function addCursorTrail(e) {
+    cursors.push({ x: e.clientX, y: e.clientY, alpha: 1, size: 32 });
+  }
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  function animateTrail() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=cursors.length-1;i>=0;i--){
+      const c = cursors[i];
+      ctx.globalAlpha = c.alpha;
+      ctx.drawImage(cursorImg,c.x-c.size/2,c.y-c.size/2,c.size,c.size);
+      ctx.globalAlpha = 1;
+      c.alpha -= 0.05;
+      if(c.alpha<=0) cursors.splice(i,1);
     }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
 
-    function addCursorTrail(e) {
-      cursors.push({ x: e.clientX, y: e.clientY, alpha: 1, size: 32 }); // Größe auf PNG abstimmen
+  // Klick-Logik
+  document.body.addEventListener("click", () => {
+    clicks++;
+
+    if(clicks === 1){
+      sound.play(); // erste Musik
     }
 
-    function animateTrail() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = cursors.length - 1; i >= 0; i--) {
-        const c = cursors[i];
-        ctx.globalAlpha = c.alpha;
-        ctx.drawImage(cursorImg, c.x - c.size/2, c.y - c.size/2, c.size, c.size); // ✅ Mausbild zeichnen
-        ctx.globalAlpha = 1;
-
-        c.alpha -= 0.05;
-        if (c.alpha <= 0) cursors.splice(i,1);
-      }
-
-      requestAnimationFrame(animateTrail);
+    if(clicks === 5){
+      sound.pause();
+      sound2.play();
+      document.body.style.backgroundColor = "black";
+      plakativ.style.display = "block";
+      document.body.style.cursor = "none";
+      canvas.style.display = "block";
+      document.body.addEventListener("mousemove", addCursorTrail);
     }
-    animateTrail();
+  });
+
+  // Optional: echten Cursor ausblenden
+  document.body.style.cursor = "url('cursor.png') 16 16, auto";
 </script>
 </body>
 </html>
