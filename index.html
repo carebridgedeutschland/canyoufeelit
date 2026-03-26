@@ -53,6 +53,9 @@
     <source srcset="eyessmall.png" media="(max-width: 600px)">
     <img src="eyesbig.png">
   </picture>
+
+     <!-- ✅ Hier einfügen -->
+  <canvas id="cursorTrail" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;display:none;"></canvas>
   
   <audio id="sound" loop>
   <source src="sound.mp3" type="audio/mpeg">
@@ -89,6 +92,39 @@ const sound2 = document.getElementById("sound2");
         document.body.style.backgroundColor = "#000000"; // hellgrau
   }
 });
+        // ================= Ghost-Cursor-Trail =================
+    const canvas = document.getElementById("cursorTrail");
+    const ctx = canvas.getContext("2d");
+    let cursors = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    function addCursorTrail(e) {
+      cursors.push({ x: e.clientX, y: e.clientY, alpha: 1, size: 20 });
+    }
+
+    function animateTrail() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = cursors.length - 1; i >= 0; i--) {
+        const c = cursors[i];
+        ctx.fillStyle = `rgba(0,0,0,${c.alpha})`;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.size/2, 0, Math.PI*2);
+        ctx.fill();
+
+        c.alpha -= 0.05;
+        if (c.alpha <= 0) cursors.splice(i,1);
+      }
+
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
 </script>
 </body>
 </html>
