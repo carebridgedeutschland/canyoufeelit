@@ -64,21 +64,8 @@ body, img, picture, canvas {
 #plakativ, #cursorTrail {
   pointer-events: none;    /* keine Klicks/Maus auf dem Bild möglich */
 }
-    /* 🟨 Link Style */
-  #specialLink {
-    position: absolute;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
-    color: #00f;
-    font-family: Helvetica, sans-serif;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: none; /* 🟨 zunächst unsichtbar */
-    z-index: 20;
-    
   </style>
+
 </head>
   <body>
   <div class="container">
@@ -94,9 +81,7 @@ body, img, picture, canvas {
      <!-- ✅ Hier einfügen -->
   <canvas id="cursorTrail" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;display:none;"></canvas>
  
-    <!-- 🟨 Link -->
-<a href="https://www.youtube.com/watch?v=EFxkucJshGM&t=893s" id="specialLink">INESCAPABLE: ARCHIV 2</a>
-    
+ 
   <audio id="sound" loop>
   <source src="sound.mp3" type="audio/mpeg">
 </audio>
@@ -138,10 +123,6 @@ const sound2 = document.getElementById("sound2");
         canvas.style.display = "block";
         document.body.addEventListener("mousemove", addCursorTrail);
         
-  // 🟨 Link erst 3 Sekunden nach dem 5. Klick einblenden
-  const specialLink = document.getElementById("specialLink");
-  setTimeout(() => {
-    specialLink.style.display = "block";
   }, 3000);
       }
     });
@@ -181,16 +162,6 @@ const sound2 = document.getElementById("sound2");
       requestAnimationFrame(animateTrail);
     }
     animateTrail();
-
-       // 🟨 Link nach 3 Sekunden einblenden
-      const specialLink = document.getElementById("specialLink");
-      setTimeout(() => {
-        specialLink.style.display = "block";
-      }, 3000);
-    }
-  }, { once: false });
-
-
 </script>
 </body>
 </html>
