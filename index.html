@@ -101,10 +101,14 @@ const sound2 = document.getElementById("sound2");
         document.body.addEventListener("mousemove", addCursorTrail);
       }
     });
-        // ================= Ghost-Cursor-Trail =================
+   // ================= Ghost-Cursor-Trail mit Cursor-PNG =================
     const canvas = document.getElementById("cursorTrail");
     const ctx = canvas.getContext("2d");
     let cursors = [];
+
+    // Cursor-Bild
+    const cursorImg = new Image();
+    cursorImg.src = "cursor.png"; // 🟢 Dein Maus-Cursor PNG hier
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -114,7 +118,7 @@ const sound2 = document.getElementById("sound2");
     window.addEventListener("resize", resizeCanvas);
 
     function addCursorTrail(e) {
-      cursors.push({ x: e.clientX, y: e.clientY, alpha: 1, size: 20 });
+      cursors.push({ x: e.clientX, y: e.clientY, alpha: 1, size: 32 }); // Größe auf PNG abstimmen
     }
 
     function animateTrail() {
@@ -122,10 +126,9 @@ const sound2 = document.getElementById("sound2");
 
       for (let i = cursors.length - 1; i >= 0; i--) {
         const c = cursors[i];
-        ctx.fillStyle = `rgba(0,0,0,${c.alpha})`;
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.size/2, 0, Math.PI*2);
-        ctx.fill();
+        ctx.globalAlpha = c.alpha;
+        ctx.drawImage(cursorImg, c.x - c.size/2, c.y - c.size/2, c.size, c.size); // ✅ Mausbild zeichnen
+        ctx.globalAlpha = 1;
 
         c.alpha -= 0.05;
         if (c.alpha <= 0) cursors.splice(i,1);
