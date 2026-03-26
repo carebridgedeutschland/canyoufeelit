@@ -65,16 +65,19 @@ const plakativ = document.getElementById("plakativ");
 const sound = document.getElementById("sound");
 const sound2 = document.getElementById("sound2");
 
-document.body.addEventListener("click", () => {
-  sound.play();
-}, { once: true });
+ document.body.addEventListener("click", () => {
+      clicks++;
 
-document.body.addEventListener("click", () => {
-  clicks++;
-  if (clicks >= 5) {
-    plakativ.style.display = "block";  // 
-    sound.pause();                     
-    sound2.play(); 
+      // erster Sound nur beim ersten Klick
+      if (clicks === 1) {
+        sound.play(); // ✅ korrigiert: alles in einem Listener
+      }
+
+      // nach 5 Klicks
+      if (clicks >= 5) {
+        plakativ.style.display = "block"; // ✅ korrigiert: display richtig setzen
+        sound.pause();                     
+        sound2.play(); 
   }
 });
 </script>
