@@ -43,7 +43,7 @@
     <img src="logo.png" class="main">
     <img src="loader2.gif" class="loader2">
   </div>
-<img id="plakativ" src="2241387.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10;">  <audio id="sound" loop>
+<img id="plakativ" src="eyes.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10;">  <audio id="sound" loop>
     <source src="sound.mp3" type="audio/mpeg">
   </audio>
 
@@ -52,18 +52,27 @@
       document.getElementById("sound").play();
     }, { once: true });
   </script>
+    
+  <script>
+let clicks = 0;
+const plakativ = document.getElementById("plakativ");
+const sound = document.getElementById("sound");
+const sound2 = document.getElementById("sound2");
 
-<script>
-    let clicks = 0;
-    const plakativ = document.getElementById("plakativ");
+// normale Musik starten bei erstem Klick
+document.body.addEventListener("click", () => {
+  sound.play();
+}, { once: true });
 
-    document.body.addEventListener("click", () => {
-      clicks++;
-      if (clicks >= 3) {
-        plakativ.style.display = "block";
-      }
-    });
-  </script>
-  
+// Klick-Zähler für Plakatbild und Musikwechsel
+document.body.addEventListener("click", () => {
+  clicks++;
+  if (clicks >= 5) {
+    plakativ.style.display = "2241387.png";  // Bild sichtbar
+    sound.pause();                      // alte Musik stoppen
+    sound2.play();                      // neue Musik starten
+  }
+});
+</script>
 </body>
 </html>
