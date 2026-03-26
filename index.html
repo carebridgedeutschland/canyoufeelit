@@ -17,7 +17,7 @@
       height: 100vh;
       transition: background-color 0.5s ease;
       overflow: hidden; /* verhindert Scrollbars */
-      cursor: url('cursor.png') 16 16, auto; /* 🟨 echter Cursor ersetzt vor 5 Klicks */
+      document.body.style.cursor = "url('cursor.png') 16 16, auto"; // 🟨 Cursor-PNG vor 5 Klicks
     }
 
     .container {
