@@ -90,8 +90,11 @@ const sound2 = document.getElementById("sound2");
         sound.pause();                     
         sound2.play(); 
         document.body.style.backgroundColor = "#000000"; // hellgrau
-  }
-});
+      // Ghost-Cursor aktivieren
+        canvas.style.display = "block";
+        document.body.addEventListener("mousemove", addCursorTrail);
+      }
+    });
         // ================= Ghost-Cursor-Trail =================
     const canvas = document.getElementById("cursorTrail");
     const ctx = canvas.getContext("2d");
