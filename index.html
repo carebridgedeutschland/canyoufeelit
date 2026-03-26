@@ -16,8 +16,9 @@
       align-items: center;
       height: 100vh;
       transition: background-color 0.5s ease;
-      overflow: hidden; /* verhindert Scrollbars */
-      document.body.style.cursor = "url('cursor.png') 16 16, auto"; // 🟨 Cursor-PNG vor 5 Klicks
+      overflow: hidden; 
+      cursor: auto; /* 🟨 echtes CSS, Cursor wird später per JS ersetzt */
+}
     }
 
     .container {
@@ -112,6 +113,9 @@ body, img, picture, canvas {
   </script>
     
   <script>
+
+    document.body.style.cursor = "url('cursor.png') 16 16, auto";
+    
 let clicks = 0;
 const plakativ = document.getElementById("plakativ");
 const sound = document.getElementById("sound");
