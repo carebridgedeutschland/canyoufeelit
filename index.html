@@ -44,17 +44,10 @@
     <img src="loader2.gif" class="loader2">
   </div>
     
-<img id="plakativ" src="eyes.png"
-style="
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-object-fit: contain; /* ✅ nichts wird abgeschnitten */
-display: none;
-z-index: 10;
-">
+<picture id="plakativ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10;">
+    <source srcset="eyessmall.png" media="(max-width: 600px)">
+    <img src="eyesbig.png" style="width: 100%; height: 100%; object-fit: cover;">
+  </picture>
   
   <audio id="sound" loop>
   <source src="sound.mp3" type="audio/mpeg">
